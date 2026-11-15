@@ -56,7 +56,7 @@ results/
 
 1. `bash experiment/scripts/setup_github.sh` creates both repositories, the fork's `main`,
    the ruleset that protects `main`, labels, the five issues and the five seeded PRs.
-2. Set a spending limit in the Anthropic Console, then `gh secret set ANTHROPIC_API_KEY --repo iDheer/tinydb`.
+2. Run `claude setup-token` (Claude Pro/Max plan) and store it with `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo iDheer/tinydb`; an Anthropic API key in `ANTHROPIC_API_KEY` works too.
 3. Label an issue `autose`.
 4. `python -I experiment/scripts/eval_hidden.py <tinydb clone> I1 <diff.patch>` runs the
    hidden tests against a run's `diff.patch` (downloaded from `autose-artifacts`).

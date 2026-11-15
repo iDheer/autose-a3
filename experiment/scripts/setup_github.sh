@@ -75,5 +75,5 @@ gh pr list --repo "$FORK" --json number,title,headRefName
 
 echo
 echo "Done. Remaining manual steps:"
-echo "  - set a hard spending limit in the Anthropic Console"
-echo "  - gh secret set ANTHROPIC_API_KEY --repo $FORK      (paste the key when prompted)"
+echo "  - in a SEPARATE terminal (not in Claude Code): claude setup-token   (uses your Claude Pro plan)"
+echo "  - gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo $FORK   (paste the token when prompted)"
