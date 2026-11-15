@@ -28,7 +28,7 @@ index 76470aa..2c3af42 100644
 +
 +        if limit is not None:
 +            # Stop early and do not cache a partial result
-+            docs = []
++            docs: list[Document] = []
 +            for doc_id, doc in self._read_table().items():
 +                if len(docs) >= limit:
 +                    break

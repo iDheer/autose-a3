@@ -48,7 +48,7 @@ index 76470aa..6ba2392 100644
 -            for doc_id, doc in self._read_table().items()
 -            if cond(doc)
 -        ]
-+        docs = []
++        docs: list[Document] = []
 +        for doc_id, doc in self._read_table().items():
 +            if limit is not None and len(docs) >= limit:
 +                break
