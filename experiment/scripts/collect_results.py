@@ -33,7 +33,7 @@ def sh(cmd, cwd=None):
 
 def fetch_artifacts(dest: Path) -> Path:
     if not (dest / ".git").exists():
-        sh(["git", "clone", "-q", "--single-branch", "--branch", "autose-artifacts", FORK, str(dest)])
+        sh(["git", "-c", "core.autocrlf=false", "clone", "-q", "--single-branch", "--branch", "autose-artifacts", FORK, str(dest)])
     else:
         sh(["git", "fetch", "-q", "origin", "autose-artifacts"], dest)
         sh(["git", "reset", "-q", "--hard", "origin/autose-artifacts"], dest)
