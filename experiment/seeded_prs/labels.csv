@@ -1,0 +1,6 @@
+seeded_pr,issue,branch,expected_verdict,expected_route,defect_class,defect,hidden_tests_passed
+S1,I1,seeded/S1-fragment-fix,approve,none,none,"Correct: fragment() hash now includes the path (reference fix) with tests.",3/3
+S2,I2,seeded/S2-one-of-list-in-lambda,request_changes,implement,code,"list(items) is called inside the test lambda, so a generator is still consumed by the first document; later documents never match. Own tests only check one value.",0/3
+S3,I3,seeded/S3-limit-poisons-cache,request_changes,implement,code,"A limited search stores its truncated result in the query cache under the same query key, so a later search(q) without limit returns too few documents.",2/4
+S4,I4,seeded/S4-append-as-table-method,request_changes,design,approach,"Adds Table.append_to(field, value, cond) instead of the requested operation tinydb.operations.append usable with update(); `from tinydb.operations import append` fails.",0/3
+S5,I3,seeded/S5-limit-correct,approve,none,none,"Correct: limit stops early and does not cache partial results; cached full results are sliced.",4/4

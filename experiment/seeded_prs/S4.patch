@@ -1,0 +1,39 @@
+diff --git a/tests/test_append_to.py b/tests/test_append_to.py
+new file mode 100644
+index 0000000..7b65d20
+--- /dev/null
++++ b/tests/test_append_to.py
+@@ -0,0 +1,10 @@
++from tinydb import TinyDB, Query
++from tinydb.storages import MemoryStorage
++
++
++def test_append_to_existing_and_missing_list():
++    db = TinyDB(storage=MemoryStorage)
++    db.insert_multiple([{'id': 1, 'tags': ['a']}, {'id': 2}])
++    db.append_to('tags', 'x', Query().id.exists())
++    assert db.get(doc_id=1)['tags'] == ['a', 'x']
++    assert db.get(doc_id=2)['tags'] == ['x']
+diff --git a/tinydb/table.py b/tinydb/table.py
+index 76470aa..b38f033 100644
+--- a/tinydb/table.py
++++ b/tinydb/table.py
+@@ -528,6 +528,18 @@ class Table:
+ 
+             return updated_ids
+ 
++    def append_to(self, field: str, value, cond: QueryLike) -> list[int]:
++        """
++        Append ``value`` to the list in ``field`` of every document matching
++        ``cond``. Missing fields are created as a one-element list.
++
++        :returns: a list containing the updated documents' IDs
++        """
++        def transform(doc: MutableMapping):
++            doc.setdefault(field, []).append(value)
++
++        return self.update(transform, cond)
++
+     def update_multiple(
+         self,
+         updates: Iterable[

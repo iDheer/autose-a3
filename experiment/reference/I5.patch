@@ -1,0 +1,58 @@
+diff --git a/tinydb/storages.py b/tinydb/storages.py
+index 59337a1..6b4a419 100644
+--- a/tinydb/storages.py
++++ b/tinydb/storages.py
+@@ -7,11 +7,36 @@ import io
+ import json
+ import os
+ import warnings
++from datetime import date, datetime
+ from abc import ABC, abstractmethod
+ from typing import Any, Optional
+ 
+ __all__ = ('Storage', 'JSONStorage', 'MemoryStorage')
+ 
++_TYPE_KEY = '__tinydb_type__'
++
++
++def _encode(obj: Any) -> Any:
++    """Replace datetime/date values with tagged JSON objects (recursively)."""
++    if isinstance(obj, datetime):
++        return {_TYPE_KEY: 'datetime', 'value': obj.isoformat()}
++    if isinstance(obj, date):
++        return {_TYPE_KEY: 'date', 'value': obj.isoformat()}
++    if isinstance(obj, dict):
++        return {k: _encode(v) for k, v in obj.items()}
++    if isinstance(obj, (list, tuple)):
++        return [_encode(v) for v in obj]
++    return obj
++
++
++def _decode(obj: dict) -> Any:
++    """``object_hook`` that turns tagged objects back into datetime/date."""
++    if len(obj) == 2 and obj.get(_TYPE_KEY) == 'datetime':
++        return datetime.fromisoformat(obj['value'])
++    if len(obj) == 2 and obj.get(_TYPE_KEY) == 'date':
++        return date.fromisoformat(obj['value'])
++    return obj
++
+ 
+ def touch(path: str, create_dirs: bool):
+     """
+@@ -137,14 +162,14 @@ class JSONStorage(Storage):
+             self._handle.seek(0)
+ 
+             # Load the JSON contents of the file
+-            return json.load(self._handle)
++            return json.load(self._handle, object_hook=_decode)
+ 
+     def write(self, data: dict[str, dict[str, Any]]):
+         # Move the cursor to the beginning of the file just in case
+         self._handle.seek(0)
+ 
+         # Serialize the database state using the user-provided arguments
+-        serialized = json.dumps(data, **self.kwargs)
++        serialized = json.dumps(_encode(data), **self.kwargs)
+ 
+         # Write the serialized data to the file
+         try:

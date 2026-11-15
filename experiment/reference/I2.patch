@@ -1,0 +1,15 @@
+diff --git a/tinydb/queries.py b/tinydb/queries.py
+index e106c5d..127c1d6 100644
+--- a/tinydb/queries.py
++++ b/tinydb/queries.py
+@@ -481,6 +481,10 @@ class Query(QueryInstance):
+ 
+         :param items: The list of items to check with
+         """
++        if not isinstance(items, (list, tuple, set, frozenset)):
++            # Materialise generators/iterators once, so every document is tested
++            # against all items and the query can be evaluated repeatedly.
++            items = list(items)
+         return self._generate_test(
+             lambda value: value in items,
+             ('one_of', self._path, freeze(items))

@@ -1,0 +1,1 @@
+run_id,issue,kind,variant,round,status,stage_reached,impl_attempts,design_revisions,tester_runs,pr,ci,review_verdict,review_route,hidden_passed,hidden_total,suite_failed,cost_usd,input_tokens,output_tokens,cache_read_tokens,run_url
