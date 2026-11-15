@@ -1,0 +1,7 @@
+_fork/
+__pycache__/
+*.pyc
+.venv/
+report_src/*.aux
+report_src/*.log
+report_src/*.out
