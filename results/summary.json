@@ -1,0 +1,9 @@
+{
+  "cost_usd": 6.3057,
+  "input_tokens": 574,
+  "output_tokens": 257940,
+  "cache_read_tokens": 4111975,
+  "cache_creation_tokens": 783162,
+  "runs": 12,
+  "reviews": 16
+}

@@ -1,0 +1,11 @@
+{
+  "issue": "I5",
+  "patch": "C:\\Users\\inesh\\Desktop\\AutoSE3\\_artifacts\\issue-5\\run-43717905065-1\\diff.patch",
+  "applied": true,
+  "hidden_passed": 4,
+  "hidden_total": 4,
+  "hidden_failed_names": [],
+  "suite_passed": 245,
+  "suite_failed": 0,
+  "suite_failed_names": []
+}

@@ -1,1 +1,13 @@
 run_id,issue,kind,variant,round,status,stage_reached,impl_attempts,design_revisions,tester_runs,pr,ci,review_verdict,review_route,hidden_passed,hidden_total,suite_failed,cost_usd,input_tokens,output_tokens,cache_read_tokens,run_url
+43716337981-1,I1,bug,baseline,1,stopped,implement,1,0,0,,,,,,,,0.237,24,8305,131713,https://github.com/iDheer/tinydb/actions/runs/43716337981
+43717026729-1,I1,bug,baseline,1,pr-open,review,1,0,1,12,success,approve,none,3,3,0,0.3064,40,16593,254338,https://github.com/iDheer/tinydb/actions/runs/43717026729
+43718866759-1,I1,bug,selftest,1,stopped-after-test,test,1,0,1,,,,,3,3,0,0.2314,22,9988,116883,https://github.com/iDheer/tinydb/actions/runs/43718866759
+43717567536-1,I2,bug,baseline,1,pr-open,review,1,0,1,14,success,approve,none,3,3,0,0.223,34,12489,218461,https://github.com/iDheer/tinydb/actions/runs/43717567536
+43718869610-1,I2,bug,selftest,1,stopped-after-test,test,1,0,1,,,,,3,3,0,0.2139,32,12952,247123,https://github.com/iDheer/tinydb/actions/runs/43718869610
+43717570478-1,I3,feature,baseline,1,pr-open,review,1,0,1,15,success,approve,none,4,4,0,0.3286,32,17648,207695,https://github.com/iDheer/tinydb/actions/runs/43717570478
+43718872397-1,I3,feature,selftest,1,stopped-after-test,test,1,0,1,,,,,4,4,0,0.3376,38,23742,310583,https://github.com/iDheer/tinydb/actions/runs/43718872397
+43717574209-1,I4,feature,baseline,1,pr-open,review,1,0,1,13,success,approve,none,3,3,0,0.2123,26,10447,135011,https://github.com/iDheer/tinydb/actions/runs/43717574209
+43718875030-1,I4,feature,selftest,1,stopped-after-test,test,1,0,1,,,,,3,3,0,0.1704,18,10495,114161,https://github.com/iDheer/tinydb/actions/runs/43718875030
+43717576958-1,I5,vague,baseline,1,needs-info,spec,0,0,0,,,,,,,,0.1135,4,10131,41098,https://github.com/iDheer/tinydb/actions/runs/43717576958
+43717905065-1,I5,vague,baseline,1,pr-open,review,2,0,2,17,success,request_changes,implement,4,4,0,0.5431,56,30371,395324,https://github.com/iDheer/tinydb/actions/runs/43717905065
+43718689487-1,I5,vague,baseline,2,pr-open,review,2,0,2,17,success,approve,none,4,4,0,0.2863,42,10921,322372,https://github.com/iDheer/tinydb/actions/runs/43718689487

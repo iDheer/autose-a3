@@ -1,0 +1,61 @@
+run_id,issue,variant,round,stage,attempt,passed,reasons
+43716337981-1,I1,baseline,1,spec,1,True,
+43716337981-1,I1,baseline,1,design,,True,
+43717026729-1,I1,baseline,1,spec,1,False,"FR-QRY-002.AC-1: judge says not testable: The Given refers to the ana and raj documents 'from the issue' without stating raj's contents, so the starting state is not concrete; the expected result also depends on raj's home data, which is unstated (only ana's document is given in the Then)."
+43717026729-1,I1,baseline,1,spec,2,True,
+43717026729-1,I1,baseline,1,design,,True,
+43717026729-1,I1,baseline,1,implement,1,True,
+43717026729-1,I1,baseline,1,test,1,True,
+43717026729-1,I1,baseline,1,release,,True,PR #12 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43717273822)
+43717026729-1,I1,baseline,1,review,1,True,approve route=none findings=2
+43718866759-1,I1,selftest,1,spec,1,True,
+43718866759-1,I1,selftest,1,design,,True,
+43718866759-1,I1,selftest,1,implement,1,True,
+43718866759-1,I1,selftest,1,test,1,True,
+43717567536-1,I2,baseline,1,spec,1,True,
+43717567536-1,I2,baseline,1,design,,True,
+43717567536-1,I2,baseline,1,implement,1,True,
+43717567536-1,I2,baseline,1,test,1,True,
+43717567536-1,I2,baseline,1,release,,True,PR #14 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43717773407)
+43717567536-1,I2,baseline,1,review,1,True,approve route=none findings=2
+43718869610-1,I2,selftest,1,spec,1,True,
+43718869610-1,I2,selftest,1,design,,True,
+43718869610-1,I2,selftest,1,implement,1,True,
+43718869610-1,I2,selftest,1,test,1,True,
+43717570478-1,I3,baseline,1,spec,1,True,
+43717570478-1,I3,baseline,1,design,,True,
+43717570478-1,I3,baseline,1,implement,1,True,
+43717570478-1,I3,baseline,1,test,1,True,
+43717570478-1,I3,baseline,1,release,,True,PR #15 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43717814573)
+43717570478-1,I3,baseline,1,review,1,True,approve route=none findings=3
+43718872397-1,I3,selftest,1,spec,1,False,"FR-SRCH-003.AC-2: judge says not testable: 'Existing calls' is not a concrete starting state; the test cannot know which calls or prior results to compare against, so 'results are unchanged' has no defined baseline."
+43718872397-1,I3,selftest,1,spec,2,True,
+43718872397-1,I3,selftest,1,design,,True,
+43718872397-1,I3,selftest,1,implement,1,True,
+43718872397-1,I3,selftest,1,test,1,True,
+43717574209-1,I4,baseline,1,spec,1,True,
+43717574209-1,I4,baseline,1,design,,True,
+43717574209-1,I4,baseline,1,implement,1,True,
+43717574209-1,I4,baseline,1,test,1,True,
+43717574209-1,I4,baseline,1,release,,True,PR #13 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43717766362)
+43717574209-1,I4,baseline,1,review,1,True,approve route=none findings=2
+43718875030-1,I4,selftest,1,spec,1,True,
+43718875030-1,I4,selftest,1,design,,True,
+43718875030-1,I4,selftest,1,implement,1,True,
+43718875030-1,I4,selftest,1,test,1,True,
+43717576958-1,I5,baseline,1,spec,1,False,"spec verdict is DRAFT (the issue does not yet define what to build) | open P1 questions: Q-001, Q-002, Q-003 | no READY MUST/SHOULD requirement | FR-DATE-001 is NEEDS-CLARIFICATION (core requirements must be READY) | FR-DATE-001.AC-2: contains a <TBD> placeholder | FR-DATE-002 is NEEDS-CLARIFICATION (core requirements must be READY) | FR-DATE-002.AC-2: contains a <TBD> placeholder | FR-DATE-003 is NEEDS-CLARIFICATION (core requirements must be READY) | FR-DATE-003.AC-3: contains a <TBD> placehol"
+43717905065-1,I5,baseline,1,spec,1,True,
+43717905065-1,I5,baseline,1,design,,False,CON-003.AC-1 not mapped to code and a test idea | CON-003.AC-2 not mapped to code and a test idea
+43717905065-1,I5,baseline,1,design,,True,
+43717905065-1,I5,baseline,1,implement,1,True,
+43717905065-1,I5,baseline,1,test,1,True,
+43717905065-1,I5,baseline,1,release,,False,PR #17 state OPEN | CI failure (https://github.com/iDheer/tinydb/actions/runs/43718254334)
+43717905065-1,I5,baseline,1,test,2,True,
+43717905065-1,I5,baseline,1,release,,True,PR #17 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43718396367)
+43717905065-1,I5,baseline,1,review,1,False,request_changes route=implement findings=3
+43718689487-1,I5,baseline,2,implement,1,True,
+43718689487-1,I5,baseline,2,test,1,True,
+43718689487-1,I5,baseline,2,release,,False,PR #17 state OPEN | CI failure (https://github.com/iDheer/tinydb/actions/runs/43718834889)
+43718689487-1,I5,baseline,2,test,2,True,
+43718689487-1,I5,baseline,2,release,,True,PR #17 state OPEN | CI success (https://github.com/iDheer/tinydb/actions/runs/43718935972)
+43718689487-1,I5,baseline,2,review,2,True,approve route=none findings=4

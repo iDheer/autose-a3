@@ -1,0 +1,150 @@
+[
+  {
+    "issue": "I1",
+    "variant": "baseline",
+    "branch": "fork/autose/issue-1",
+    "tests": 4,
+    "base": {
+      "passed": 2,
+      "failed": 2
+    },
+    "own": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  {
+    "issue": "I1",
+    "variant": "selftest",
+    "branch": "base",
+    "tests": 5,
+    "base": {
+      "passed": 2,
+      "failed": 3
+    },
+    "own": {
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  {
+    "issue": "I2",
+    "variant": "baseline",
+    "branch": "fork/autose/issue-2",
+    "tests": 6,
+    "base": {
+      "passed": 3,
+      "failed": 3
+    },
+    "own": {
+      "passed": 6,
+      "failed": 0
+    },
+    "seeded": "S2",
+    "vs_seeded": {
+      "passed": 3,
+      "failed": 3
+    },
+    "catches_defect": true
+  },
+  {
+    "issue": "I2",
+    "variant": "selftest",
+    "branch": "base",
+    "tests": 6,
+    "base": {
+      "passed": 3,
+      "failed": 3
+    },
+    "own": {
+      "passed": 6,
+      "failed": 0
+    },
+    "seeded": "S2",
+    "vs_seeded": {
+      "passed": 3,
+      "failed": 3
+    },
+    "catches_defect": true
+  },
+  {
+    "issue": "I3",
+    "variant": "baseline",
+    "branch": "fork/autose/issue-3",
+    "tests": 11,
+    "base": {
+      "passed": 3,
+      "failed": 8
+    },
+    "own": {
+      "passed": 11,
+      "failed": 0
+    },
+    "seeded": "S3",
+    "vs_seeded": {
+      "passed": 9,
+      "failed": 2
+    },
+    "catches_defect": true
+  },
+  {
+    "issue": "I3",
+    "variant": "selftest",
+    "branch": "base",
+    "tests": 12,
+    "base": {
+      "passed": 3,
+      "failed": 9
+    },
+    "own": {
+      "passed": 12,
+      "failed": 0
+    },
+    "seeded": "S3",
+    "vs_seeded": {
+      "passed": 10,
+      "failed": 2
+    },
+    "catches_defect": true
+  },
+  {
+    "issue": "I4",
+    "variant": "baseline",
+    "branch": "fork/autose/issue-4",
+    "tests": 3,
+    "base": {
+      "passed": 0,
+      "failed": 3
+    },
+    "own": {
+      "passed": 3,
+      "failed": 0
+    },
+    "seeded": "S4",
+    "vs_seeded": {
+      "passed": 0,
+      "failed": 3
+    },
+    "catches_defect": true
+  },
+  {
+    "issue": "I4",
+    "variant": "selftest",
+    "branch": "base",
+    "tests": 7,
+    "base": {
+      "passed": 0,
+      "failed": 7
+    },
+    "own": {
+      "passed": 7,
+      "failed": 0
+    },
+    "seeded": "S4",
+    "vs_seeded": {
+      "passed": 0,
+      "failed": 7
+    },
+    "catches_defect": true
+  }
+]

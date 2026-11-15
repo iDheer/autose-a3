@@ -1,0 +1,11 @@
+seeded_pr,pr,variant,expected_verdict,verdict,raw_verdict,verdict_correct,expected_route,route,blocking_findings,findings,route_correct,defect_named,overrides,turns,cost_usd,input_tokens,output_tokens,dir
+S5,10,baseline,approve,request_changes,request_changes,False,none,implement,1,3,False,n/a,,10,0.196531,14,5192,pr-10-baseline-43718221980
+S5,10,informed,approve,request_changes,request_changes,False,none,implement,1,4,False,n/a,,8,0.1920922,8,5031,pr-10-informed-43718538880
+S1,6,baseline,approve,approve,approve,True,none,none,0,1,True,n/a,,9,0.15192560000000002,10,4241,pr-6-baseline-43718210715
+S1,6,informed,approve,approve,approve,True,none,none,0,1,True,n/a,,9,0.190664,10,4186,pr-6-informed-43718526769
+S2,7,baseline,request_changes,request_changes,request_changes,True,implement,implement,2,3,True,True,,9,0.11655780000000002,10,3785,pr-7-baseline-43718213808
+S2,7,informed,request_changes,request_changes,request_changes,True,implement,implement,3,4,True,True,,8,0.15878219999999998,8,4609,pr-7-informed-43718529643
+S3,8,baseline,request_changes,request_changes,request_changes,True,implement,implement,3,4,True,True,,8,0.11553859999999999,8,3666,pr-8-baseline-43718216297
+S3,8,informed,request_changes,request_changes,request_changes,True,implement,implement,3,4,True,True,,8,0.1760678,10,4167,pr-8-informed-43718532640
+S4,9,baseline,request_changes,request_changes,request_changes,True,design,design,1,2,True,True,,8,0.1230504,8,3428,pr-9-baseline-43718219003
+S4,9,informed,request_changes,request_changes,request_changes,True,design,implement,2,3,False,True,,9,0.1561504,10,4277,pr-9-informed-43718535683

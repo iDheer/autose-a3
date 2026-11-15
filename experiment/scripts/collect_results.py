@@ -25,6 +25,11 @@ COLS = ["run_id", "issue", "kind", "variant", "round", "status", "stage_reached"
         "hidden_total", "suite_failed", "cost_usd", "input_tokens", "output_tokens", "cache_read_tokens",
         "run_url"]
 STAGES = ["spec", "design", "implement", "test", "release", "review"]
+# Manual judgement (author read every finding): does a blocker/major finding identify the
+# seeded defect from labels.csv? Quoted evidence is in results/runs.md.
+DEFECT_NAMED = {("S2", "baseline"): True, ("S2", "informed"): True,
+                ("S3", "baseline"): True, ("S3", "informed"): True,
+                ("S4", "baseline"): True, ("S4", "informed"): True}
 
 
 def sh(cmd, cwd=None):
@@ -61,6 +66,7 @@ def main() -> int:
     do_hidden = "--no-hidden" not in sys.argv
     art = fetch_artifacts(Path(sys.argv[2]).resolve() if len(sys.argv) > 2 and not sys.argv[2].startswith("--")
                           else ROOT / "_artifacts")
+    stage_rows: list[dict] = []
     rows, tot = [], {"cost_usd": 0.0, "input_tokens": 0, "output_tokens": 0, "cache_read_tokens": 0,
                      "cache_creation_tokens": 0, "runs": 0, "reviews": 0}
     for sp in sorted(art.glob("issue-*/state.json"), key=lambda p: int(p.parent.name.split("-")[1])):
@@ -73,8 +79,21 @@ def main() -> int:
             rj = load(d / "run.json", {}) or {}
             c, tok = rj.get("counters", {}), rj.get("tokens", {}) or r.get("tokens", {})
             passed = r.get("passed_stages", [])
-            reached = STAGES[min(len(STAGES) - 1, max([STAGES.index(s) for s in passed] + [-1]) + 1)]
+            reached = ("test" if r["status"] == "stopped-after-test" else
+                       STAGES[min(len(STAGES) - 1, max([STAGES.index(s) for s in passed] + [-1]) + 1)])
+            for st in rj.get("stages", []):
+                stage_rows.append({"run_id": f"{r['run_id']}-{r['attempt']}", "issue": iid,
+                                   "variant": r.get("variant", "baseline"), "round": r["round"],
+                                   "stage": st["stage"], "attempt": st.get("attempt", ""),
+                                   "passed": st["passed"], "reasons": " | ".join(st.get("reasons", []))[:500]})
             rv = load(d / f"review-round-{r['round']}.json")
+            if rv:
+                stage_rows.append({"run_id": f"{r['run_id']}-{r['attempt']}", "issue": iid,
+                                   "variant": r.get("variant", "baseline"), "round": r["round"],
+                                   "stage": "review", "attempt": r["round"],
+                                   "passed": rv.get("verdict") == "approve",
+                                   "reasons": f"{rv.get('verdict')} route={rv.get('route')} "
+                                              f"findings={len(rv.get('findings', []))}"})
             row = {"run_id": f"{r['run_id']}-{r['attempt']}", "issue": iid, "kind": KIND.get(iid, ""),
                    "variant": r.get("variant", "baseline"), "round": r["round"], "status": r["status"],
                    "stage_reached": "review" if rv else reached,
@@ -113,6 +132,16 @@ def main() -> int:
         w.writeheader()
         w.writerows({k: row.get(k, "") for k in COLS} for row in rows)
 
+    with open(RESULTS / "stage_checks.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, ["run_id", "issue", "variant", "round", "stage", "attempt", "passed", "reasons"])
+        w.writeheader()
+        w.writerows(stage_rows)
+    print("stage check pass rates (all real runs):")
+    for stg in STAGES:
+        rs = [x for x in stage_rows if x["stage"] == stg]
+        if rs:
+            print(f"  {stg:9s} {sum(x['passed'] for x in rs)}/{len(rs)} checks passed")
+
     labels = {r["issue"] + ":" + r["seeded_pr"]: r for r in csv.DictReader(
         open(ROOT / "experiment/seeded_prs/labels.csv", encoding="utf-8"))}
     pr_of = {}  # seeded PR number -> label row, by branch
@@ -133,7 +162,9 @@ def main() -> int:
                       "raw_verdict": v.get("raw_verdict"), "verdict_correct": v.get("verdict") == lab.get("expected_verdict"),
                       "expected_route": lab.get("expected_route", ""), "route": v.get("route"),
                       "blocking_findings": len(blocking), "findings": len(v.get("findings", [])),
-                      "defect_named": "", "overrides": "; ".join(v.get("overrides", [])),
+                      "route_correct": v.get("route") == lab.get("expected_route"),
+                      "defect_named": DEFECT_NAMED.get((lab.get("seeded_pr"), v.get("variant")), "n/a"),
+                      "overrides": "; ".join(v.get("overrides", [])),
                       "turns": m.get("num_turns"), "cost_usd": m.get("cost_usd"),
                       "input_tokens": u.get("input_tokens", 0), "output_tokens": u.get("output_tokens", 0),
                       "dir": vp.parent.name})
