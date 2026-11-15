@@ -35,9 +35,10 @@ The workflow never merges. It ends with a `MERGE_READINESS_CHECK` comment and th
 ```
 README.md                 this file
 report.pdf                the report (source in report_src/)
+report_src/               LaTeX source of report.pdf (pdflatex report.tex)
 architecture/
   views/                  component view, sequence view (one real run), stage map
-  decisions/              ADR-001 … ADR-010 (Nygard format, superseded ones kept)
+  decisions/              ADR-001 … ADR-011 (Nygard format; ADR-009 superseded in part by ADR-011, kept and marked)
 workflow/                 copy of the fork's .github/workflows/ and .autose/ (agent code, prompts,
                           A1 skill, config, unit tests) and ARCHITECTURE.md
 experiment/
@@ -46,11 +47,34 @@ experiment/
   reference/              my reference fixes, used only to validate the hidden tests
   seeded_prs/             5 reviewer-check PRs: diffs, PR descriptions, ground-truth labels.csv
   variants.md             what each decision-experiment variant changes
-  scripts/                setup_github.sh, eval_hidden.py, collect_results.py, sync_workflow.sh
+  scripts/                setup_github.sh, eval_hidden.py, collect_results.py, test_strength.py,
+                          replay_test_file.py, sync_workflow.sh
 results/
-  results.csv             one row per run
-  runs.md                 links to every Actions run, PR and review
+  results.csv             one row per build run (status, stages, PR, CI, review, hidden tests, cost, tokens)
+  stage_checks.csv        every stage-check evaluation with its reason
+  experiment_A.csv        the 10 seeded-PR reviews against labels.csv
+  experiment_B_strength.json  agent tests vs. the defective seeded implementations
+  summary.json            total cost and tokens
+  hidden/                 eval_hidden.py output per diff
+  selftest_tests/         experiment-B test files rebuilt from transcripts
+  runs.md                 links to every Actions run, PR and review, with notes
 ```
+
+## Results at a glance
+
+- 5 issues → 5 PRs ([#12](https://github.com/iDheer/tinydb/pull/12), [#13](https://github.com/iDheer/tinydb/pull/13),
+  [#14](https://github.com/iDheer/tinydb/pull/14), [#15](https://github.com/iDheer/tinydb/pull/15),
+  [#17](https://github.com/iDheer/tinydb/pull/17)), all labelled `autose:ready-for-human`, none merged.
+  **17/17 hidden tests pass.**
+- The vague issue #5 stopped at stage 1 with questions, continued after the maintainer answered, and
+  needed one review send-back (a real regression the hidden tests did not cover).
+- Experiment A (reviewer isolation): both variants caught 3/3 seeded defects. The isolated reviewer
+  routed 3/3 correctly; the informed one sent the wrong-approach PR to implementation instead of design.
+- Experiment B (separate tester): null result. Both variants' tests caught all seeded defects.
+- Total: 12 build runs + 16 reviews, $6.31 at API list prices (Claude Pro subscription token, so nothing
+  billed beyond the subscription); 257,940 output tokens and 4.11M cache-read tokens.
+- The first real run broke the design: the SDK sandbox does not start on GitHub runners. That led to
+  ADR-011 and fix PR [#11](https://github.com/iDheer/tinydb/pull/11). See [`results/runs.md`](results/runs.md).
 
 ## Reproducing
 

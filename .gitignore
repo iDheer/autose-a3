@@ -6,3 +6,10 @@ report_src/*.aux
 report_src/*.log
 report_src/*.out
 _artifacts/
+report_src/*.aux
+report_src/*.log
+report_src/*.fls
+report_src/*.fdb_latexmk
+report_src/*.out
+report_src/report.pdf
+report_src/build.log

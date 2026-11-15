@@ -1,0 +1,46 @@
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\footnotesize, x=1cm, y=1cm,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, fill=white},
+  agent/.style={box, fill=blue!7, minimum width=3.2cm},
+  code/.style={box, fill=gray!10},
+  ext/.style={box, fill=orange!12},
+  job/.style={draw, dashed, rounded corners=3pt, inner sep=5pt},
+  arr/.style={-{Stealth[length=2mm]}, semithick},
+  lab/.style={font=\scriptsize, fill=white, inner sep=1pt}]
+  \node[ext] (issue) at (0,0.3) {Issue + maintainer};
+  \node[code] (gate) at (0,-1.6) {\texttt{gate.py}\\authorise, parse};
+  \node[ext] (art) at (0,-4.7) {branch\\\texttt{autose-artifacts}};
+  \node[code] (orch) at (4,-1.6) {\texttt{orchestrator.py}\\state machine, budgets};
+  \node[code] (chk) at (4,-3.15) {\texttt{checks.py}\\network-less};
+  \node[code] (rel) at (4,-4.7) {release step\\push, PR, wait CI};
+  \node[agent] (plan) at (8.1,-0.5) {Planner · Sonnet 5.5\\read-only};
+  \node[agent] (impl) at (8.1,-1.65) {Implementer · Sonnet 5.5\\writes design files};
+  \node[agent] (test) at (8.1,-2.8) {Tester · Sonnet 5.5\\writes its test file};
+  \node[agent] (judge) at (8.1,-3.95) {Judge · Haiku 5.5\\no tools};
+  \node[code, minimum width=3.2cm] (proxy) at (8.1,-5.1) {key proxy 127.0.0.1\\holds the real token};
+  \node[ext] (pr) at (4,-6.6) {Pull request\\+ \texttt{ci.yml} run};
+  \node[agent] (rev) at (12.8,-0.9) {Reviewer · Opus 5.5\\issue + diff + repo};
+  \node[code] (rules) at (12.8,-2.25) {verdict rules\\(can overrule approve)};
+  \node[code] (pub) at (12.8,-4.6) {\texttt{publish.py}\\review, route,\\\texttt{MERGE\_READINESS\_CHECK}};
+  \node[ext] (human) at (12.8,-6.6) {Human decides\\merge or close};
+  \begin{scope}[on background layer]
+    \node[job, fit=(gate), label={[font=\scriptsize]below:job \textbf{gate}}] {};
+    \node[job, fit=(orch)(rel)(plan)(proxy), label={[font=\scriptsize]above:job \textbf{build}: stages 1--5 (write token, never given to agents)}] {};
+    \node[job, fit=(rev)(rules), label={[font=\scriptsize]above:job \textbf{review} (read-only token)}] {};
+    \node[job, fit=(pub), label={[font=\scriptsize]above right:job \textbf{publish}}] {};
+  \end{scope}
+  \draw[arr] (issue) -- node[lab, right]{label / \texttt{/autose}} (gate);
+  \draw[arr] (gate) -- (orch);
+  \foreach \a in {plan, impl, test, judge} \draw[arr] (orch.east) -- ++(0.35,0) |- (\a.west);
+  \draw[arr] (orch) -- (chk);
+  \draw[arr] (chk) -- (rel);
+  \draw[arr, dashed] (judge) -- node[lab, right]{model calls} (proxy);
+  \draw[arr] (orch.south west) -- node[lab, sloped, above]{save state} (art.north east);
+  \draw[arr] (rel) -- (pr);
+  \draw[arr] (pr.east) -- (10.45,-6.6) -- node[lab, sloped, above, pos=0.45]{PR head + diff} (10.45,-0.9) -- (rev.west);
+  \draw[arr] (rev) -- (rules);
+  \draw[arr] (rules) -- (pub);
+  \draw[arr] (pub) -- node[lab, right, pos=0.65]{ready / not ready} (human);
+  \draw[arr] (pub.east) -- (15.6,-4.6) -- (15.6,1.0) -- node[lab, above, pos=0.5]{changes requested and rounds left: \texttt{workflow\_dispatch mode=rework}, back to stage 2 or 3} (0.6,1.0) -- (0.6,-1.15);
+\end{tikzpicture}}

@@ -6,7 +6,7 @@
 | 2 | Design | Planner, design session (Sonnet 5.5) using `ARCHITECTURE.md` | `design.md` | Files to modify exist; named functions/classes/methods exist (AST); files to create do not; every acceptance criterion mapped to a file and a test idea | orchestrator | One retry with the check output; then stop. |
 | 3 | Implementation | Implementer (Sonnet 5.5) | `diff.patch` | Diff non-empty; only design files changed; `compileall`, `import tinydb` and `mypy tinydb` succeed | orchestrator | Retry (counts as an attempt). `design_gap` → stage 2 (once). |
 | 4 | Testing | Tester (Sonnet 5.5) | `test_report.md` | Full suite passes; every acceptance criterion has a test named after it; ≥1 new test fails on the base commit | orchestrator | Failures → stage 3 (≤ 3 attempts per design); attempts used up → stage 2 (once); `test_dispute` → tester once; then stop. |
-| 5 | Release | none (`release.py`) | `pr.md` + PR link | PR state OPEN; CI run for the head SHA concluded `success` | orchestrator | CI failure → stage 3 once with the CI log, then stop. |
+| 5 | Release | none (release step in `orchestrator.py`) | `pr.md` + PR link | PR state OPEN; CI run for the head SHA concluded `success` | orchestrator | CI failure → stage 3 once with the CI log, then stop. |
 | 6 | Review | Reviewer (Opus 5.5), separate job | `review.md` | Reviewer verdict `approve` that survives the verdict rules, **or** two send-backs used up | `publish.py` (rules) → human | `approach` finding → stage 2, `code` finding → stage 3, via a new workflow run (`mode=rework`), at most twice. |
 
 After stage 6 the workflow posts a `MERGE_READINESS_CHECK` comment and labels the PR
