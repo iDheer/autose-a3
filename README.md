@@ -12,7 +12,7 @@
 | Artifacts of every run | branch [`autose-artifacts`](https://github.com/iDheer/tinydb/tree/autose-artifacts) of the fork, plus the Actions run's uploaded artifacts |
 | All runs, PRs, reviews | [`results/runs.md`](results/runs.md) |
 | Report | [`report.pdf`](report.pdf) |
-| Demo video | see `demo.mp4` / link below |
+| Demo video | [`demo.mp4`](demo.mp4) (4:58): screen recording of the real issues, runs, PRs and reviews, with on-screen captions and no audio |
 
 ## How to trigger the workflow
 
@@ -34,6 +34,7 @@ The workflow never merges. It ends with a `MERGE_READINESS_CHECK` comment and th
 
 ```
 README.md                 this file
+demo.mp4                  demo video (screen recording, 4:58)
 report.pdf                the report (source in report_src/)
 report_src/               LaTeX source of report.pdf (pdflatex report.tex)
 architecture/
