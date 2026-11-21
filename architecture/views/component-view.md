@@ -4,63 +4,7 @@ The workflow has one deterministic **orchestrator** and four LLM agents. Agents 
 call GitHub, never hold a credential and never decide whether a check passed. Each box
 with a lock is a separate GitHub Actions job with its own `GITHUB_TOKEN` permissions.
 
-```mermaid
-flowchart TB
-  subgraph GH["GitHub (fork iDheer/tinydb)"]
-    ISSUE[(Issue + comments)]
-    PR[(Pull request)]
-    ART[(branch autose-artifacts<br/>spec.md design.md diff.patch<br/>test_report.md pr.md review.md state.json)]
-    CI[[ci.yml<br/>workflow_dispatch]]
-  end
-
-  subgraph J1["🔒 job gate  (issues:write, contents:read)"]
-    GATE[gate.py<br/>authorisation + command parsing]
-  end
-
-  subgraph J2["🔒 job build  (contents:write, pull-requests:write, issues:write, actions:write)"]
-    ORCH[orchestrator.py<br/>state machine, budgets, checks]
-    PROXY[key proxy<br/>127.0.0.1, injects API key]
-    CHK[checks.py<br/>deterministic checks<br/>run in netless namespace]
-    JUDGE[testability judge<br/>Haiku 5.5, no tools]
-    PLAN[Planner agent<br/>Sonnet 5.5<br/>Read Glob Grep]
-    IMPL[Implementer agent<br/>Sonnet 5.5<br/>Read Glob Grep Edit Write Bash*]
-    TEST[Tester agent<br/>Sonnet 5.5<br/>Read Glob Grep Edit Write Bash*]
-    REL[release step<br/>orchestrator.st_release<br/>git push, gh pr create,<br/>dispatch + wait for CI]
-  end
-
-  subgraph J3["🔒 job review  (contents:read only, no GitHub token in agent env)"]
-    REV[Reviewer agent<br/>Opus 5.5<br/>Read Glob Grep Bash* Write(scratch)]
-    RCHK[verdict rules]
-  end
-
-  subgraph J4["🔒 job publish  (pull-requests:write, issues:write, contents:write, actions:write)"]
-    PUB[publish.py<br/>post review, MERGE_READINESS_CHECK,<br/>route next round]
-  end
-
-  HUMAN((Maintainer<br/>merge or close))
-
-  ISSUE -- "label autose / comment /autose" --> GATE
-  GATE -- "outputs: issue, mode, round" --> ORCH
-  ORCH -- "issue (fenced, untrusted)<br/>+ A1 skill" --> PLAN
-  ORCH -- "spec.md + ARCHITECTURE.md" --> PLAN
-  ORCH -- "spec.md + design.md + failures" --> IMPL
-  ORCH -- "spec.md ACs + design.md" --> TEST
-  ORCH --> CHK
-  ORCH --> JUDGE
-  ORCH --> REL
-  PLAN & IMPL & TEST & JUDGE -. "HTTP via" .-> PROXY
-  REL --> PR
-  REL --> CI
-  ORCH --> ART
-  PR -- "head commit + diff" --> REV
-  ISSUE -- "issue text only" --> REV
-  REV --> RCHK --> PUB
-  PUB --> PR
-  PUB --> ART
-  PUB -- "changes requested & rounds left:<br/>workflow_dispatch mode=rework" --> GATE
-  PUB -- "approved or rounds used up" --> HUMAN
-  HUMAN --> PR
-```
+![Component view: four Actions jobs (gate, build, review, publish), the orchestrator, the agents and the key proxy](component-view.png)
 
 `Bash*` = sandboxed Bash (bubblewrap, no network), restricted by a per-role command
 allowlist enforced in a `PreToolUse` hook.
