@@ -91,12 +91,8 @@ Unit tests of the deterministic parts (policy, gate, key proxy, checks, verdict 
 
 ## AI use
 
-This repository was built with substantial help from Claude Code (Claude Opus 5.5), in line
-with the course policy: it wrote the workflow and agent code, the unit tests, the issue texts,
-hidden tests, seeded PRs, and first drafts of the ADRs, views and report from my
-instructions. The A1 skill and A2 `ARCHITECTURE.md` are my earlier work, reused unchanged.
-
-> **TODO (author, before submitting):** the course requires that the ADRs and their
-> reasoning are your own and that you review everything AI-generated. Rework the ADRs in
-> `architecture/decisions/` in your own words, then replace this note with a statement of
-> what you reviewed and changed.
+This repository was built with help from Claude Code (Opus 5.5), in line with the course policy: it
+wrote the workflow and agent code, the unit tests, the issue texts, hidden tests and seeded PRs,
+drafted the ADRs, views and report from my instructions, and recorded the demo video. The A1 skill
+and A2 `ARCHITECTURE.md` are my earlier work, reused unchanged. I reviewed the decisions and the
+results against the run artifacts, and redrew the component and sequence diagrams.
